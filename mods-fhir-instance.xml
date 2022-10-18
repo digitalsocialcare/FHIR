@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir"><!-- MODS (Minimum Operational Data Set for a Digital Social Care Record) --><!-- Model Version 0.0.6 -->
+   <type value="collection"/>
+   <!--Care and support needs-->
+   <!-- Resource TODO -->
+   <!--Care organisations-->
+   <!-- Resource TODO -->
+   <!--Care Plan-->
+   <!-- Resource TODO -->
+   <!--Care workers-->
+   <!-- Resource TODO -->
+   <!--Carers-->
+   <!-- Resource TODO -->
+   <!--Health and Wellbeing-->
+   <!-- Resource TODO -->
+   <!--Legal Requirements-->
+   <!-- Resource TODO -->
+   <!--Referral-->
+   <!-- Resource TODO -->
+   <!--Subject of care-->
+   <entry>
+      <resource><!-- A care actor who is a person and seeks to receive, is receiving, or has received care. -->
+         <Patient><!-- Sex --><!-- model id:86092 Cardinality=0..1  MRO=R -->
+            <extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-BirthSex">
+               <valueCode value="M"/>
+            </extension>
+            <!-- Ethnicity -->
+            <!-- model id:86090 Cardinality=0..1  MRO=R -->
+            <extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-EthnicCategory">
+               <valueCodeableConcept>
+                  <coding>
+                     <system value="https://fhir.hl7.org.uk/CodeSystem/UKCore-EthnicCategoryEngland"/>
+                     <code value="A"/>
+                     <display value="White - British"/>
+                  </coding>
+               </valueCodeableConcept>
+            </extension>
+            <!-- Religion -->
+            <!-- model id:86091 Cardinality=0..1  MRO=R -->
+            <extension url="http://hl7.org/fhir/StructureDefinition/patient-religion">
+               <valueCodeableConcept>
+                  <coding>
+                     <system value="http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation"/>
+                     <code value="1007"/>
+                     <display value="Atheism"/>
+                  </coding>
+               </valueCodeableConcept>
+            </extension>
+            <!-- NHS Number -->
+            <!-- model id:86094 Cardinality=0..1  MRO=M/R -->
+            <identifier>
+               <extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-NHSNumberVerificationStatus">
+                  <valueCodeableConcept>
+                     <coding>
+                        <system value="https://fhir.hl7.org.uk/CodeSystem/UKCore-NHSNumberVerificationStatus"/>
+                        <code value="number-present-and-verified"/>
+                        <display value="Number present and verified"/>
+                     </coding>
+                  </valueCodeableConcept>
+               </extension>
+               <system value="https://fhir.nhs.uk/Id/nhs-number"/>
+               <value value="4857773456"/>
+            </identifier>
+            <!-- National Insurance Number -->
+            <!-- model id:86096 Cardinality=0..1  MRO=R -->
+            <identifier>
+               <system value="https://fhir.nhs.uk/Id/ni-number-PLACEHOLDER"/>
+               <value value="NP990999D"/>
+            </identifier>
+            <!-- Other person unique identifier -->
+            <!-- model id:91542-->
+            <identifier>
+               <system value="Type"/>
+               <value value="Identifier"/>
+            </identifier>
+            <!-- Person's name -->
+            <!-- model id:86084 MRO=M  Cardinality=1..1 -->
+            <name>
+               <family value="Familyname"/>
+               <given value="Firstname"/>
+            </name>
+            <name>
+               <use value="usual"/>
+               <given value="Preferredname"/>
+            </name>
+            <!-- Person's telephone number details -->
+            <!-- model id:https://develop.digitalsocialcare.co.uk/catalogue/dataClass/91551-->
+            <telecom>
+               <system value="phone"/>
+               <value value="0121 444 8888"/>
+            </telecom>
+            <!-- Person's email address details -->
+            <!-- model id:https://develop.digitalsocialcare.co.uk/catalogue/dataClass/91552-->
+            <telecom>
+               <system value="email"/>
+               <value value="email@example.com"/>
+            </telecom>
+            <!-- Gender -->
+            <!-- model id:86089 Cardinality=0..1  MRO=R -->
+            <gender value="male"/>
+            <!-- Date of birth -->
+            <!-- model id:86087 Cardinality=1..1  MRO=M -->
+            <birthDate value="1990-01-02"/>
+            <!-- Person's address -->
+            <!-- model id:86100 MRO=R  Cardinality=1..* -->
+            <address><!-- Currently resident --><!-- model id:86107 Cardinality=0..1  MRO=R -->
+                <!-- Not clear how to map 'Currently resident'. Concepts are "home" and "old" (the opposite), or a date range. -->
+                <!-- Address type --><!-- model id:91546 Cardinality=0..1  MRO=R -->
+                <!-- 'Address type' needs an extension, and one of the existing codes -->
+                <!-- Address entry 1 --><!-- model id:86099 Cardinality=0..1  MRO=R -->
+               <line value="Address entry 1"/>
+               <!-- Address entry 2 -->
+               <!-- model id:86101 Cardinality=0..1  MRO=R -->
+               <line value="Address entry 2"/>
+               <!-- Address entry 3 -->
+               <!-- model id:86102 Cardinality=0..1  MRO=R -->
+               <line value="Address entry 3"/>
+               <!-- Address entry 4 -->
+               <!-- model id:86103 Cardinality=0..1  MRO=R -->
+               <line value="Address entry 4"/>
+               <!-- Address entry 5 -->
+               <!-- model id:86104 Cardinality=0..1  MRO=R -->
+               <line value="Address entry 5"/>
+               <!-- Postcode -->
+               <!-- model id:86105 Cardinality=0..1  MRO=R -->
+               <postalCode value="Postcode"/>
+               <!-- Country -->
+               <!-- model id:86106 Cardinality=0..1  MRO=R -->
+               <country value="Country"/>
+            </address>
+            <!-- Marital status -->
+            <!-- model id:86093 Cardinality=0..1  MRO=O -->
+            <maritalStatus>
+               <coding>
+                  <system value="https://fhir.hl7.org.uk/CodeSystem/UKCore-PersonMaritalStatus"/>
+                  <code value="married-or-civil-partner"/>
+                  <display value="Married/Civil Partner"/>
+               </coding>
+            </maritalStatus>
+            <!-- Photograph -->
+            <!-- model id:86098 Cardinality=0..1  MRO=M -->
+            <photo>
+               <url value="https://picsum.photos/id/237/200/300"/>
+               <title value="Good boy"/>
+            </photo>
+         </Patient>
+      </resource>
+   </entry>
+</Bundle>
