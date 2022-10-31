@@ -1,33 +1,736 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir"><!-- MODS (Minimum Operational Data Set for a Digital Social Care Record) --><!-- Model Version 0.0.6 -->
+   <meta>
+      <profile value="http://www.metadataregistry.org.uk/fhir/profile/mods"/>
+   </meta>
    <type value="collection"/>
-   <!--Care and support needs-->
-   <!-- Resource TODO -->
-   <!--Care organisations-->
-   <!-- Resource TODO -->
-   <!--Care Plan-->
-   <!-- Resource TODO -->
-   <!--Care workers-->
-   <!-- Resource TODO -->
-   <!--Carers-->
-   <!-- Resource TODO -->
-   <!--Health and Wellbeing-->
-   <!-- Resource TODO -->
-   <!--Legal Requirements-->
-   <!-- Resource TODO -->
+   <!-- This derives from Care workers.Care worker.Care team-->
+   <entry>
+      <resource>
+         <CareTeam>
+            <id value="careTeamId"/>
+            <name value="Example Care Team"/>
+            <participant>
+               <member>
+                  <reference value="PractitionerRole/86150"/>
+               </member>
+            </participant>
+         </CareTeam>
+      </resource>
+   </entry>
+   <!--Need entry-->
+   <entry>
+      <resource><!--  -->
+         <Observation><!-- Care need assessment identifier, model id:91572, parent id:91569, parent name:Need entry, parent of parent name:Care and support needs -->
+            <identifier>
+               <system value="http://www.metadataregistry.org.uk/fhir/identifier/example-care-assessment-need-identifier"/>
+               <value value="ABC-123-456"/>
+            </identifier>
+            <status value="final"/>
+            <code><!-- Care and support need, model id:91570, parent id:91569, parent name:Need entry, parent of parent name:Care and support needs -->
+               <coding><!-- not sure if these are in SCT -->
+                  <system value="http://snomed.info/sct"/>
+                  <code value="9999999111"/>
+                  <display value="Significant need - Psychological support"/>
+               </coding>
+            </code>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <!-- Date, model id:91571, parent id:91569, parent name:Need entry, parent of parent name:Care and support needs -->
+            <effectiveDateTime value="2022-10-20"/>
+            <!-- todo relationships are "for further review" -->
+         </Observation>
+      </resource>
+   </entry>
+   <!--GP Practice-->
+   <entry>
+      <resource><!-- Details of the person's GP practice -->
+         <Organization><!-- system could also possibly be https://fhir.nhs.uk/Id/ods-site-code --><!-- GP Practice indentifier, model id:86147, parent id:86145, parent name:GP Practice, parent of parent name:Care organisations (Cardinality=1..1 MRO=M) -->
+            <identifier>
+               <system value="https://fhir.nhs.uk/Id/ods-organization-code"/>
+               <value value="GPPracticeindentifier"/>
+            </identifier>
+            <!-- CQC Location ID number, model id:86148, parent id:86145, parent name:GP Practice, parent of parent name:Care organisations (Cardinality=1..1 MRO=R) -->
+            <identifier>
+               <system value="http://www.metadataregistry.org.uk/fhir/identifier/example-cqc"/>
+               <value value="CQCLocationIDnumber"/>
+            </identifier>
+            <!-- GP  Practice name, model id:86146, parent id:86145, parent name:GP Practice, parent of parent name:Care organisations (Cardinality=0..1 MRO=R) -->
+            <name value="GP  Practice name"/>
+         </Organization>
+      </resource>
+   </entry>
+   <!--Local Authority-->
+   <entry>
+      <resource><!--  -->
+         <Organization><!-- Organisation code, model id:91605, parent id:91603, parent name:Local Authority, parent of parent name:Care organisations -->
+            <identifier>
+               <system value="http://www.metadataregistry.org.uk/fhir/identifier/example-org-code"/>
+               <value value="Organisationcode"/>
+            </identifier>
+            <!-- Local authority name, model id:91604, parent id:91603, parent name:Local Authority, parent of parent name:Care organisations -->
+            <name value="Local authority name"/>
+         </Organization>
+      </resource>
+   </entry>
+   <!--Care organisation-->
+   <entry>
+      <resource><!-- General model for care organisations i.e. health organisation / care provider -->
+         <Organization>
+            <name value="Care Organisation"/>
+         </Organization>
+      </resource>
+   </entry>
+   <!--Care worker-->
+   <entry>
+      <resource><!-- The details of the person’s professional contacts including other regulated care providers -->
+         <PractitionerRole>
+            <id value="86150"/>
+            <contained>
+               <Practitioner>
+                  <id value="Practitioner86150"/>
+                  <name><!-- Name, model id:86149, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..1 MRO=R) -->
+                     <text value="Careworker"/>
+                  </name>
+               </Practitioner>
+            </contained>
+            <!-- Professional identifier, model id:91565, parent id:86150, parent name:Care worker, parent of parent name:Care workers -->
+            <identifier>
+               <system value="http://www.metadataregistry.org.uk/fhir/identifier/example-professional-identifier"/>
+               <value value="Professionalidentifier"/>
+            </identifier>
+            <practitioner>
+               <reference value="#Practitioner86150"/>
+            </practitioner>
+            <organization><!-- system could also possibly be https://fhir.nhs.uk/Id/ods-site-code --><!-- Organisation code, model id:86154, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..1 MRO=R) -->
+               <identifier>
+                  <system value="https://fhir.nhs.uk/Id/ods-organization-code"/>
+                  <value value="Organisationcode"/>
+               </identifier>
+               <!-- Organisation name, model id:86155, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..1 MRO=R) -->
+               <display value="Organisationname"/>
+            </organization>
+            <code><!-- Role, model id:86151, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..* MRO=R) -->
+               <coding>
+                  <extension url="http://hl7.org/fhir/StructureDefinition/valueset-reference">
+                     <valueUri value="https://fhir.hl7.org.uk/ValueSet/UKCore-PractitionerRoleCode"/>
+                  </extension>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Role"/>
+                  <display value="Role"/>
+               </coding>
+            </code>
+            <!-- This could also be an extension -->
+            <code><!-- Key worker, model id:86152, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..1 MRO=R) -->
+               <coding>
+                  <system value="http://www.metadataregistry.org.uk/fhir/codesystem/example-key-worker"/>
+                  <code value="Keyworker"/>
+                  <display value="Key worker"/>
+               </coding>
+            </code>
+            <specialty><!-- Speciality, model id:86153, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..1 MRO=R) -->
+               <coding>
+                  <extension url="http://hl7.org/fhir/StructureDefinition/valueset-reference">
+                     <valueUri value="http://hl7.org/fhir/ValueSet/c80-practice-codes"/>
+                  </extension>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Speciality"/>
+                  <display value="Speciality"/>
+               </coding>
+            </specialty>
+            <!-- Telephone number, model id:86156, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..* MRO=R) -->
+            <telecom>
+               <system value="phone"/>
+               <value value="Telephonenumber"/>
+            </telecom>
+            <!-- Email address, model id:86157, parent id:86150, parent name:Care worker, parent of parent name:Care workers (Cardinality=0..* MRO=R) -->
+            <telecom>
+               <system value="email"/>
+               <value value="Emailaddress"/>
+            </telecom>
+         </PractitionerRole>
+      </resource>
+   </entry>
+   <!--Carer-->
+   <entry>
+      <resource><!-- Somebody who provides support or who looks after a family member, partner or friend who needs help because of their age, physical or mental illness, or disability. -->
+         <RelatedPerson><!--Assuming this is a boolean, there is little information--><!-- Ordinary Residence, model id:91559, parent id:91545, parent name:Carer, parent of parent name:Carers -->
+            <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-ordinary-residence">
+               <valueBoolean value="true"/>
+            </extension>
+            <!--Assuming this is a boolean, there is little information-->
+            <!-- Volunteers for, model id:91562, parent id:91545, parent name:Carer, parent of parent name:Carers -->
+            <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-volunteers-for">
+               <valueBoolean value="true"/>
+            </extension>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <relationship><!-- Carer relationship, model id:91558, parent id:91545, parent name:Carer, parent of parent name:Carers -->
+               <coding>
+                  <system value="http://www.metadataregistry.org.uk/fhir/identifier/example-carer-relationship"/>
+                  <code value="Carerrelationship"/>
+                  <display value="Carer relationship"/>
+               </coding>
+            </relationship>
+            <name><!-- Carer's name, model id:91547, parent id:91545, parent name:Carer, parent of parent name:Carers (MRO=M Cardinality=1..1) -->
+               <text value="Carer'sname"/>
+            </name>
+            <name>
+               <use value="usual"/>
+               <!-- Preferred name, model id:86086, parent id:91547, parent name:Carer's name, parent of parent name:Carer (Cardinality=0..1 MRO=R) -->
+               <given value="Preferredname"/>
+            </name>
+            <!-- Person's telephone number details, model id:91551, parent id:91548, parent name:Carer's contact details, parent of parent name:Carer -->
+            <telecom>
+               <system value="phone"/>
+               <value value="0121 444 8888"/>
+               <!-- Person's telephone number type, model id:86112, parent id:91551, parent name:Person's telephone number details, parent of parent name:Carer's contact details (Cardinality=0..* MRO=R) -->
+               <use value="home"/>
+            </telecom>
+            <!-- Person's email address details, model id:91552, parent id:91548, parent name:Carer's contact details, parent of parent name:Carer -->
+            <telecom>
+               <system value="email"/>
+               <value value="email@example.com"/>
+               <!-- Person's email address type, model id:91554, parent id:91552, parent name:Person's email address details, parent of parent name:Carer's contact details (Cardinality=0..1) -->
+               <use value="home"/>
+            </telecom>
+         </RelatedPerson>
+      </resource>
+   </entry>
+   <!--Impairment record-->
+   <entry>
+      <resource><!-- A record of any impairments for the person relating to reasonable adjustments. -->
+         <Condition><!-- Mandatory status -->
+            <clinicalStatus>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+                  <code value="active"/>
+                  <display value="Active"/>
+               </coding>
+            </clinicalStatus>
+            <code><!-- Coded value, model id:86161, parent id:86160, parent name:Impairment record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Codedvalue"/>
+                  <display value="Coded value"/>
+               </coding>
+               <!-- Impairment category, model id:86158, parent id:86160, parent name:Impairment record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <text value="Impairment category"/>
+            </code>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <!-- Impairment additional detail, model id:86162, parent id:86160, parent name:Impairment record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <note>
+               <text value="Description of what the person can do with the impairment, what they want to be able to do and how they should be supported to do it and what the consequences are of not providing the support.&#xA;Where there is a sensory disability include sensory processing difficulties (e.g. affects to balance and movement, oversensitive, under-sensitive)."/>
+            </note>
+         </Condition>
+      </resource>
+   </entry>
+   <!--Mental capacity assessment-->
+   <entry>
+      <resource><!-- A record of any impairments for the person relating to reasonable adjustments. -->
+         <Observation><!-- Mandatory status -->
+            <status value="final"/>
+            <code>
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="1234567"/>
+                  <display value="Mental Capacity Assessment"/>
+               </coding>
+            </code>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <!-- Date, model id:86163, parent id:86164, parent name:Mental capacity assessment, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <effectiveDateTime value="2022-10-20"/>
+            <!-- Name, model id:86166, parent id:86164, parent name:Mental capacity assessment, parent of parent name:Health and Wellbeing (Cardinality=1..1 MRO=R) -->
+            <!-- Expecting this to be a reference, not a repeat of the data -->
+            <performer>
+               <reference value="PractitionerRole/86150"/>
+            </performer>
+            <!-- Assessment summary, model id:86165, parent id:86164, parent name:Mental capacity assessment, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <valueString value="The summary of the assessment"/>
+         </Observation>
+      </resource>
+   </entry>
+   <!--Medication administration record-->
+   <entry>
+      <resource><!-- Each entry holds details of medications administered -->
+         <MedicationStatement>
+            <contained>
+               <Medication>
+                  <id value="medication"/>
+                  <code><!-- Coded value, model id:86173, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+                     <coding>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="Codedvalue"/>
+                        <display value="Coded value"/>
+                     </coding>
+                     <!-- Medicine name, model id:86171, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+                     <text value="Medicine name"/>
+                  </code>
+                  <form><!-- Form of medicine, model id:86174, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                     <coding>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="Formofmedicine"/>
+                        <display value="Form of medicine"/>
+                     </coding>
+                  </form>
+               </Medication>
+            </contained>
+            <!-- Mandatory status -->
+            <status value="unknown"/>
+            <medicationReference>
+               <reference value="#medication"/>
+            </medicationReference>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <dosage><!-- Additional instructions, model id:86179, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <additionalInstruction>
+                  <text value="* requirements for adherence support, e.g. compliance aids, prompts and packaging requirements&#xA;* additional information about specific medicines e.g. where specific brand required&#xA;* person requirements, e.g. unable to swallow tablets."/>
+               </additionalInstruction>
+               <route><!-- Route coded value, model id:86176, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                  <coding>
+                     <system value="http://snomed.info/sct"/>
+                     <code value="Routecodedvalue"/>
+                     <display value="Route coded value"/>
+                  </coding>
+                  <!-- Route, model id:86175, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                  <text value="Route"/>
+               </route>
+               <!-- Quantity supplied, model id:86177, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+               <doseAndRate>
+                  <doseQuantity>
+                     <value value="25"/>
+                     <!-- Unit of measure, model id:86178, parent id:86172, parent name:Medication administration record, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                     <!-- Need to see about UCUM units -->
+                     <unit value="ml"/>
+                  </doseQuantity>
+               </doseAndRate>
+            </dosage>
+         </MedicationStatement>
+      </resource>
+   </entry>
+   <!--Repeat medication-->
+   <entry>
+      <resource><!-- Is the medication prescribed to be repeated -->
+         <MedicationRequest>
+            <contained>
+               <Medication>
+                  <id value="medication"/>
+                  <code><!-- Model does say what the medication actually is -->
+                     <text value="Medicine name"/>
+                  </code>
+               </Medication>
+            </contained>
+            <!-- Mandatory status -->
+            <status value="unknown"/>
+            <!-- "plan" means that this is not the actual prescription, but is saying that one exists -->
+            <intent value="plan"/>
+            <medicationReference>
+               <reference value="#medication"/>
+            </medicationReference>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <dispenseRequest><!-- Review date, model id:86182, parent id:86181, parent name:Repeat medication, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) --><!-- TODO not clear that validityPeriod and review date are the same concept -->
+               <validityPeriod>
+                  <end value="2022-11-02"/>
+               </validityPeriod>
+               <!-- Number of repeat prescriptions, model id:86180, parent id:86181, parent name:Repeat medication, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <numberOfRepeatsAllowed value="3"/>
+            </dispenseRequest>
+         </MedicationRequest>
+      </resource>
+   </entry>
+   <!--Allergies and adverse reactions record entry-->
+   <entry>
+      <resource><!-- Allergies and adverse reactions --><!-- Note that adverse events are different to allergy/intolerances (see below) -->
+         <AllergyIntolerance><!-- Type of reaction, model id:86183, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+            <type value="allergy"/>
+            <criticality value="high"><!-- FHIR has required codes so these must be used and the actual ones put in an extension -->
+               <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-allergy-intolerance-severity">
+                  <valueCodeableConcept><!-- Coded value, model id:86188, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                     <coding>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="Codedvalue"/>
+                        <display value="Coded value"/>
+                     </coding>
+                     <!-- Severity, model id:86187, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                     <text value="Severity"/>
+                  </valueCodeableConcept>
+               </extension>
+            </criticality>
+            <code><!-- Coded value, model id:86186, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Codedvalue"/>
+                  <display value="Coded value"/>
+               </coding>
+               <!-- Causative agent, model id:86185, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+               <text value="Causative agent"/>
+            </code>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+         </AllergyIntolerance>
+      </resource>
+   </entry>
+   <!--Allergies and adverse reactions record entry-->
+   <entry>
+      <resource><!-- Allergies and adverse reactions --><!-- Adverse events are different to allergy/intolerances (see above) --><!-- Type of reaction, model id:86183, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+         <AdverseEvent>
+            <contained>
+               <Substance>
+                  <id value="causativeAgent"/>
+                  <code><!-- Coded value, model id:86186, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+                     <coding>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="Codedvalue"/>
+                        <display value="Coded value"/>
+                     </coding>
+                     <!-- Causative agent, model id:86185, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=M) -->
+                     <text value="Causative agent"/>
+                  </code>
+               </Substance>
+            </contained>
+            <actuality value="actual"/>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <seriousness><!-- Coded value, model id:86188, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Codedvalue"/>
+                  <display value="Coded value"/>
+               </coding>
+               <!-- Severity, model id:86187, parent id:86184, parent name:Allergies and adverse reactions record entry, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <text value="Severity"/>
+            </seriousness>
+            <suspectEntity>
+               <instance>
+                  <reference value="#causativeAgent"/>
+               </instance>
+            </suspectEntity>
+         </AdverseEvent>
+      </resource>
+   </entry>
+   <!--Vaccinations-->
+   <entry>
+      <resource><!-- Details of vaccinations --><!-- Adverse events are different to allergy/intolerances (see above) -->
+         <Immunization><!-- FHIR doesnt have vaccine procedure (site and route are intended to cover it presumably) -->
+            <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-vaccine-procedure"><!-- Vaccine procedure, model id:86191, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=1..1 MRO=M) -->
+               <valueString value="Vaccine procedure"/>
+            </extension>
+            <status value="completed"/>
+            <vaccineCode><!-- Vaccine product, model id:86189, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=1..1 MRO=M) -->
+               <coding>
+                  <system value="https://dmd.nhs.uk"/>
+                  <code value="Vaccineproduct"/>
+                  <display value="Vaccine product"/>
+               </coding>
+            </vaccineCode>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <!-- Date of Vaccination, model id:86198, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <occurrenceDateTime value="2021-09-05"/>
+            <!-- Manufacturer, model id:86192, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=1..1 MRO=R) -->
+            <manufacturer>
+               <display value="Manufacturer"/>
+            </manufacturer>
+            <!-- Body site, model id:86193, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <site>
+               <text value="Body site"/>
+            </site>
+            <route><!-- Route, model id:86194, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Route"/>
+                  <display value="Route"/>
+               </coding>
+            </route>
+            <!-- Dose amount, model id:86196, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <doseQuantity>
+               <value value="2"/>
+               <unit value="millilitre"/>
+               <!-- UCUM needs decision -->
+               <system value="http://unitsofmeasure.org"/>
+               <code value="ml"/>
+            </doseQuantity>
+            <reasonCode><!-- Indication, model id:86195, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+               <text value="Indication"/>
+            </reasonCode>
+            <!-- Dose number, model id:86197, parent id:86190, parent name:Vaccinations, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <protocolApplied>
+               <doseNumberString value="Dose number"/>
+            </protocolApplied>
+         </Immunization>
+      </resource>
+   </entry>
+   <!--Alerts-->
+   <entry>
+      <resource><!-- This is an alerts record entry. There may be 0 to many record entries under a section. Each record entry is made up of a number of elements or data items -->
+         <Flag><!-- Date completed, model id:86205, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-flag-date-recorded">
+               <valueDateTime value="2022-10-24"/>
+            </extension>
+            <status value="active"/>
+            <!-- Alert, model id:86199, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=1..1 MRO=M) -->
+            <code>
+               <text value="Alert"/>
+            </code>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <!-- Name, model id:86201, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=1..1 MRO=R) -->
+            <!-- Role, model id:86202, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <!-- Professional identifier, model id:86204, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <!-- Contact details, model id:86206, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <!-- Organisation, model id:86203, parent id:86200, parent name:Alerts, parent of parent name:Health and Wellbeing (Cardinality=0..1 MRO=R) -->
+            <author>
+               <reference value="PractitionerRole/86150"/>
+            </author>
+         </Flag>
+      </resource>
+   </entry>
+   <!--Consent for sharing Information-->
+   <entry>
+      <resource><!-- Details of the person's consent for information sharing -->
+         <Consent>
+            <status value="rejected"><!-- Reason if consent not given, model id:86118, parent id:86116, parent name:Consent for sharing Information, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-consent-reason">
+                  <valueString value="Reason if consent not given"/>
+               </extension>
+            </status>
+            <scope>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/consentscope"/>
+                  <code value="patient-privacy"/>
+                  <display value="Privacy Consent"/>
+               </coding>
+            </scope>
+            <category>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/v3-ActCode"/>
+                  <code value="IRDSCL"/>
+                  <display value="information redisclosure"/>
+               </coding>
+               <!-- Consent for information sharing, model id:86117, parent id:86116, parent name:Consent for sharing Information, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <text value="Consent for information sharing"/>
+            </category>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <!-- The date when consent was given or not given -->
+            <!-- Date, model id:86114, parent id:86116, parent name:Consent for sharing Information, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+            <dateTime value="2020-10-06"/>
+         </Consent>
+      </resource>
+   </entry>
+   <!--Cardio-pulmonary Resuscitation consent-->
+   <entry>
+      <resource><!-- The cardio-pulmonary resuscitation (CPR) decision -->
+         <Consent>
+            <status value="active"/>
+            <scope>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/consentscope"/>
+                  <code value="adr"/>
+                  <display value="Advanced Care Directive"/>
+               </coding>
+            </scope>
+            <category><!-- Coded value, model id:86119, parent id:86120, parent name:Cardio-pulmonary Resuscitation consent, parent of parent name:Legal Requirements (Cardinality=1..1) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="450476008"/>
+                  <display value="Not for cardiopulmonary resuscitation"/>
+               </coding>
+               <!-- CPR Decision, model id:86121, parent id:86120, parent name:Cardio-pulmonary Resuscitation consent, parent of parent name:Legal Requirements (Cardinality=1..1) -->
+               <text value="CPR Decision"/>
+            </category>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <!-- if this was a free text reference it can go in sourceReference/display -->
+            <sourceAttachment><!-- Location of document, model id:86123, parent id:86120, parent name:Cardio-pulmonary Resuscitation consent, parent of parent name:Legal Requirements (Cardinality=1..1) -->
+               <url value="http://example.org/document/document.pdf"/>
+            </sourceAttachment>
+            <provision><!-- The date for review of CPR decision --><!-- Date for review, model id:86122, parent id:86120, parent name:Cardio-pulmonary Resuscitation consent, parent of parent name:Legal Requirements (Cardinality=1..1) -->
+               <period>
+                  <end value="2023-12-31"/>
+               </period>
+            </provision>
+         </Consent>
+      </resource>
+   </entry>
+   <!--Lasting power of attorney for health and welfare or court-appointed deputy (or equivalent)-->
+   <entry>
+      <resource><!-- Details of the person's LPA record or equivalent -->
+         <Consent>
+            <status value="active"/>
+            <scope>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/consentscope"/>
+                  <code value="adr"/>
+                  <display value="Advanced Care Directive"/>
+               </coding>
+            </scope>
+            <category>
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="224346008"/>
+                  <display value="Power of attorney granted"/>
+               </coding>
+            </category>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <!-- The date the LPA was recorded -->
+            <!-- Date, model id:86124, parent id:86125, parent name:Lasting power of attorney for health and welfare or court-appointed deputy (or equivalent), parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+            <dateTime value="2020-10-06"/>
+            <!-- if this was a free text reference it can go in sourceReference/display -->
+            <sourceAttachment><!-- Location of document, model id:86126, parent id:86125, parent name:Lasting power of attorney for health and welfare or court-appointed deputy (or equivalent), parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <url value="http://example.org/document/document.pdf"/>
+            </sourceAttachment>
+         </Consent>
+      </resource>
+   </entry>
+   <!--Mental health act or equivalent status-->
+   <entry>
+      <resource><!-- Details of the persons mental health act record -->
+         <Consent>
+            <status value="active"/>
+            <scope>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/consentscope"/>
+                  <code value="treatment"/>
+                  <display value="Treatment"/>
+               </coding>
+            </scope>
+            <category><!-- Mental health act legal status, model id:86137, parent id:86134, parent name:Mental health act or equivalent status, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="980011000000108"/>
+                  <display value="Detained in hospital under the Mental Health Act 1983 (England and Wales)"/>
+               </coding>
+            </category>
+            <category><!-- Supporting information, model id:86138, parent id:86134, parent name:Mental health act or equivalent status, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <text value="If person subject to Community Treatment Order or Conditional Discharge (or equivalent) record here."/>
+            </category>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <provision><!-- The date the person was detained. -->
+               <period><!-- Section start date, model id:86133, parent id:86134, parent name:Mental health act or equivalent status, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+                  <start value="2023-12-31"/>
+                  <!-- Section end date, model id:86135, parent id:86134, parent name:Mental health act or equivalent status, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+                  <end value="2023-12-31"/>
+               </period>
+               <!-- Location, model id:86136, parent id:86134, parent name:Mental health act or equivalent status, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <data>
+                  <meaning value="instance"/>
+                  <reference>
+                     <display value="Location"/>
+                  </reference>
+               </data>
+            </provision>
+         </Consent>
+      </resource>
+   </entry>
+   <!--Liberty Protection Safeguards or equivalent-->
+   <entry>
+      <resource><!-- Details of the person's Deprivation of Liberty Safeguards (DoLS) or equivalent -->
+         <Consent>
+            <status value="active"><!-- Application status, model id:86129, parent id:86128, parent name:Liberty Protection Safeguards or equivalent, parent of parent name:Legal Requirements (MRO=R Cardinality=1..1) -->
+               <extension url="http://www.metadataregistry.org.uk/fhir/extension/dols-status">
+                  <valueString value="Application status"/>
+               </extension>
+            </status>
+            <scope>
+               <coding>
+                  <system value="http://terminology.hl7.org/CodeSystem/consentscope"/>
+                  <code value="treatment"/>
+                  <display value="Treatment"/>
+               </coding>
+            </scope>
+            <category>
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="1066411000000105"/>
+                  <display value="Subject to deprivation of liberty under the Mental Capacity Act 2005 Deprivation of Liberty Safeguards"/>
+               </coding>
+               <!-- Liberty Protection Safeguards or equivalent, model id:86130, parent id:86128, parent name:Liberty Protection Safeguards or equivalent, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+               <text value="Liberty Protection Safeguards or equivalent"/>
+            </category>
+            <patient>
+               <reference value="Patient/91539"/>
+            </patient>
+            <!-- The date the LPA was recorded -->
+            <!-- Application date, model id:86127, parent id:86128, parent name:Liberty Protection Safeguards or equivalent, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+            <dateTime value="2020-10-06"/>
+            <provision><!-- The date the DOLs was authorised. -->
+               <period><!-- Start date of authorisation, model id:86131, parent id:86128, parent name:Liberty Protection Safeguards or equivalent, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+                  <start value="2023-11-30"/>
+                  <!-- Planned or actual end date of authorisation, model id:86132, parent id:86128, parent name:Liberty Protection Safeguards or equivalent, parent of parent name:Legal Requirements (Cardinality=1..1 MRO=R) -->
+                  <end value="2023-11-30"/>
+               </period>
+            </provision>
+         </Consent>
+      </resource>
+   </entry>
    <!--Referral-->
-   <!-- Resource TODO -->
+   <entry>
+      <resource><!-- See https://develop.digitalsocialcare.co.uk/#/45275/dataModel/45275/main?path=45275 -->
+         <ServiceRequest>
+            <status value="unknown"/>
+            <!-- This is not an actual instruction to referral, but a documentation of one (plan) -->
+            <intent value="plan"/>
+            <subject>
+               <reference value="Patient/91539"/>
+            </subject>
+            <!-- Referrer Details, model id:86212, parent id:86211, parent name:Referral, parent of parent name:MODS (Minimum Operational Data Set for a Digital Social Care Record) (MRO=M Cardinality=1..1) -->
+            <!-- Name of Referrer, model id:86210, parent id:86212, parent name:Referrer Details, parent of parent name:Referral (Cardinality=1..1 MRO=M) -->
+            <!-- Role, model id:86213, parent id:86212, parent name:Referrer Details, parent of parent name:Referral (Cardinality=0..1 MRO=R) -->
+            <!-- Service Name, model id:86214, parent id:86212, parent name:Referrer Details, parent of parent name:Referral (Cardinality=0..1 MRO=R) -->
+            <!-- Coded value, model id:86215, parent id:86212, parent name:Referrer Details, parent of parent name:Referral (Cardinality=0..1 MRO=R) -->
+            <!-- Telephone number, model id:86216, parent id:86212, parent name:Referrer Details, parent of parent name:Referral (Cardinality=1..1 MRO=M) -->
+            <!-- Email Address, model id:86217, parent id:86212, parent name:Referrer Details, parent of parent name:Referral (Cardinality=1..1 MRO=M) -->
+            <requester>
+               <reference value="PractitionerRole/86150"/>
+            </requester>
+            <reasonCode><!-- Coded value, model id:86220, parent id:86219, parent name:Reason for Referral, parent of parent name:Referral (MRO=R) -->
+               <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="Codedvalue"/>
+                  <display value="Coded value"/>
+               </coding>
+               <!-- Reason for Referral, model id:86218, parent id:86219, parent name:Reason for Referral, parent of parent name:Referral (Cardinality=0..1 MRO=R) -->
+               <text value="Reason for Referral"/>
+            </reasonCode>
+         </ServiceRequest>
+      </resource>
+   </entry>
    <!--Subject of care-->
    <entry>
       <resource><!-- A care actor who is a person and seeks to receive, is receiving, or has received care. -->
-         <Patient><!-- Sex --><!-- model id:86092 Cardinality=0..1  MRO=R -->
+         <Patient>
+            <id value="91539"/>
+            <!-- PCSP status, model id:86207, parent id:86208, parent name:Care Plan, parent of parent name:MODS (Minimum Operational Data Set for a Digital Social Care Record) (Cardinality=1..* MRO=R) -->
+            <!-- If this is just the existence of a care plan an extension boolean would be sufficient, otherwise a CarePlan resource could be used -->
+            <extension url="http://www.metadataregistry.org.uk/fhir/extension/example-pcsp-status">
+               <valueBoolean value="true"/>
+            </extension>
+            <!-- Sex, model id:86092, parent id:86088, parent name:Person's demographics, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
             <extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-BirthSex">
                <valueCode value="M"/>
             </extension>
-            <!-- Ethnicity -->
-            <!-- model id:86090 Cardinality=0..1  MRO=R -->
             <extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-EthnicCategory">
-               <valueCodeableConcept>
+               <valueCodeableConcept><!-- Ethnicity, model id:86090, parent id:86088, parent name:Person's demographics, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                   <coding>
                      <system value="https://fhir.hl7.org.uk/CodeSystem/UKCore-EthnicCategoryEngland"/>
                      <code value="A"/>
@@ -35,10 +738,8 @@
                   </coding>
                </valueCodeableConcept>
             </extension>
-            <!-- Religion -->
-            <!-- model id:86091 Cardinality=0..1  MRO=R -->
             <extension url="http://hl7.org/fhir/StructureDefinition/patient-religion">
-               <valueCodeableConcept>
+               <valueCodeableConcept><!-- Religion, model id:86091, parent id:86088, parent name:Person's demographics, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                   <coding>
                      <system value="http://terminology.hl7.org/CodeSystem/v3-ReligiousAffiliation"/>
                      <code value="1007"/>
@@ -46,8 +747,7 @@
                   </coding>
                </valueCodeableConcept>
             </extension>
-            <!-- NHS Number -->
-            <!-- model id:86094 Cardinality=0..1  MRO=M/R -->
+            <!-- NHS Number, model id:86094, parent id:86095, parent name:Personal identification, parent of parent name:Subject of care (Cardinality=0..1 MRO=M/R) -->
             <identifier>
                <extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-NHSNumberVerificationStatus">
                   <valueCodeableConcept>
@@ -61,20 +761,17 @@
                <system value="https://fhir.nhs.uk/Id/nhs-number"/>
                <value value="4857773456"/>
             </identifier>
-            <!-- National Insurance Number -->
-            <!-- model id:86096 Cardinality=0..1  MRO=R -->
+            <!-- National Insurance Number, model id:86096, parent id:86095, parent name:Personal identification, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
             <identifier>
                <system value="https://fhir.nhs.uk/Id/ni-number-PLACEHOLDER"/>
                <value value="NP990999D"/>
             </identifier>
-            <!-- Other person unique identifier -->
-            <!-- model id:91542-->
+            <!-- Other person unique identifier, model id:91542, parent id:86095, parent name:Personal identification, parent of parent name:Subject of care -->
             <identifier>
                <system value="Type"/>
                <value value="Identifier"/>
             </identifier>
-            <!-- Person's name -->
-            <!-- model id:86084 MRO=M  Cardinality=1..1 -->
+            <!-- Person's name, model id:86084, parent id:91539, parent name:Subject of care, parent of parent name:MODS (Minimum Operational Data Set for a Digital Social Care Record) (MRO=M Cardinality=1..1) -->
             <name>
                <family value="Familyname"/>
                <given value="Firstname"/>
@@ -83,62 +780,44 @@
                <use value="usual"/>
                <given value="Preferredname"/>
             </name>
-            <!-- Person's telephone number details -->
-            <!-- model id:https://develop.digitalsocialcare.co.uk/catalogue/dataClass/91551-->
+            <!-- Person's telephone number details, model id:91551, parent id:86110, parent name:Person's contact details, parent of parent name:Subject of care -->
             <telecom>
                <system value="phone"/>
                <value value="0121 444 8888"/>
             </telecom>
-            <!-- Person's email address details -->
-            <!-- model id:https://develop.digitalsocialcare.co.uk/catalogue/dataClass/91552-->
+            <!-- Person's email address details, model id:91552, parent id:86110, parent name:Person's contact details, parent of parent name:Subject of care -->
             <telecom>
                <system value="email"/>
                <value value="email@example.com"/>
             </telecom>
-            <!-- Gender -->
-            <!-- model id:86089 Cardinality=0..1  MRO=R -->
+            <!-- Gender, model id:86089, parent id:86088, parent name:Person's demographics, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
             <gender value="male"/>
-            <!-- Date of birth -->
-            <!-- model id:86087 Cardinality=1..1  MRO=M -->
+            <!-- Date of birth, model id:86087, parent id:86088, parent name:Person's demographics, parent of parent name:Subject of care (Cardinality=1..1 MRO=M) -->
             <birthDate value="1990-01-02"/>
-            <!-- Person's address -->
-            <!-- model id:86100 MRO=R  Cardinality=1..* -->
-            <address><!-- Currently resident --><!-- model id:86107 Cardinality=0..1  MRO=R -->
-                <!-- Not clear how to map 'Currently resident'. Concepts are "home" and "old" (the opposite), or a date range. -->
-                <!-- Address type --><!-- model id:91546 Cardinality=0..1  MRO=R -->
-                <!-- 'Address type' needs an extension, and one of the existing codes -->
-                <!-- Address entry 1 --><!-- model id:86099 Cardinality=0..1  MRO=R -->
+            <!-- Person's address, model id:86100, parent id:91539, parent name:Subject of care, parent of parent name:MODS (Minimum Operational Data Set for a Digital Social Care Record) (MRO=R Cardinality=1..*) -->
+            <address><!-- Currently resident, model id:86107, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) --><!-- Not clear how to map 'Currently resident'. Concepts are "home" and "old" (the opposite), or a date range. --><!-- Address type, model id:91546, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) --><!-- 'Address type' needs an extension, and one of the existing codes --><!-- Address entry 1, model id:86099, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <line value="Address entry 1"/>
-               <!-- Address entry 2 -->
-               <!-- model id:86101 Cardinality=0..1  MRO=R -->
+               <!-- Address entry 2, model id:86101, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <line value="Address entry 2"/>
-               <!-- Address entry 3 -->
-               <!-- model id:86102 Cardinality=0..1  MRO=R -->
+               <!-- Address entry 3, model id:86102, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <line value="Address entry 3"/>
-               <!-- Address entry 4 -->
-               <!-- model id:86103 Cardinality=0..1  MRO=R -->
+               <!-- Address entry 4, model id:86103, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <line value="Address entry 4"/>
-               <!-- Address entry 5 -->
-               <!-- model id:86104 Cardinality=0..1  MRO=R -->
+               <!-- Address entry 5, model id:86104, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <line value="Address entry 5"/>
-               <!-- Postcode -->
-               <!-- model id:86105 Cardinality=0..1  MRO=R -->
+               <!-- Postcode, model id:86105, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <postalCode value="Postcode"/>
-               <!-- Country -->
-               <!-- model id:86106 Cardinality=0..1  MRO=R -->
+               <!-- Country, model id:86106, parent id:86100, parent name:Person's address, parent of parent name:Subject of care (Cardinality=0..1 MRO=R) -->
                <country value="Country"/>
             </address>
-            <!-- Marital status -->
-            <!-- model id:86093 Cardinality=0..1  MRO=O -->
-            <maritalStatus>
+            <maritalStatus><!-- Marital status, model id:86093, parent id:86088, parent name:Person's demographics, parent of parent name:Subject of care (Cardinality=0..1 MRO=O) -->
                <coding>
                   <system value="https://fhir.hl7.org.uk/CodeSystem/UKCore-PersonMaritalStatus"/>
                   <code value="married-or-civil-partner"/>
                   <display value="Married/Civil Partner"/>
                </coding>
             </maritalStatus>
-            <!-- Photograph -->
-            <!-- model id:86098 Cardinality=0..1  MRO=M -->
+            <!-- Photograph, model id:86098, parent id:86095, parent name:Personal identification, parent of parent name:Subject of care (Cardinality=0..1 MRO=M) -->
             <photo>
                <url value="https://picsum.photos/id/237/200/300"/>
                <title value="Good boy"/>
